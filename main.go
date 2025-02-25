@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -50,6 +51,12 @@ func main() {
 	collection = client.Database("golang_db").Collection("party_pokemons")
 
 	app := fiber.New()
+
+	// add CORS to our backend server so the front end can query it
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5173",
+		AllowHeaders: "Origin,Content-Type,Accept",
+	}))
 
 	app.Get("/api/pokemons", getPartyPokemons)
 	app.Post("/api/pokemons", addPokemonToParty)
