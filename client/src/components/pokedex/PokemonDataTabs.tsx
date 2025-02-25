@@ -1,6 +1,6 @@
 import { Tabs } from "@chakra-ui/react";
 
-export default function PokemonDataTabs() {
+const PokemonDataTabs = () => {
     return (
         <Tabs.Root maxW="md" fitted defaultValue="pokedexEntry" variant="outline" margin="2">
             <Tabs.List>
@@ -22,3 +22,5 @@ export default function PokemonDataTabs() {
         </Tabs.Root>
     )
 }
+
+export default PokemonDataTabs

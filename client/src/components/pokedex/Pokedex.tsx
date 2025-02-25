@@ -11,10 +11,11 @@ import {
 } from '@chakra-ui/react'
 import SpriteChangerButton from './SpriteChangerButton'
 import PokemonDataTabs from './PokemonDataTabs'
-import PartyPokemon from './PartyPokemon'
 import PokemonSearch from './PokemonSearch'
+import PartyPokemon from './PartyPokemonItem'
+import PartyPokemonList from './PartyPokemonList'
 
-export default function Pokedex() {
+const Pokedex = () => {
     return (
         <Grid templateColumns="repeat(2, 1fr)" spaceX="6" spaceY="6" padding="4" backgroundColor="#ef4b4a">
             <Container margin="5">
@@ -48,15 +49,10 @@ export default function Pokedex() {
                 <Button variant="solid" size="md" backgroundColor="#27acf9">
                     View Party
                 </Button>
-                <SimpleGrid columns={3} columnGap="2" rowGap="2" display="grid" textAlign="center" >
-                    <PartyPokemon />
-                    <PartyPokemon />
-                    <PartyPokemon />
-                    <PartyPokemon />
-                    <PartyPokemon />
-                    <PartyPokemon />
-                </SimpleGrid>
+                <PartyPokemonList />
             </Stack>
         </Grid>
     )
 }
+
+export default Pokedex
