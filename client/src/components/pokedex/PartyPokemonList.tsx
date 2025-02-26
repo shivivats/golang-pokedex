@@ -17,7 +17,7 @@ const PartyPokemonList = () => {
         queryKey: ["pokemons"], // fetch the query that has the query key "pokemons"
         queryFn: async () => {
             try {
-                const res = await fetch("http://localhost:4000/api/pokemons")
+                const res = await fetch("http://localhost:4000/api/pokemons") // fetch the pokemon data from our API endpoint
                 const data = await res.json()
                 if (!res.ok) {
                     throw new Error(data.error || "Something went wrong")
