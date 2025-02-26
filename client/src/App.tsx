@@ -1,4 +1,3 @@
-import { Stack, Container, Center } from '@chakra-ui/react'
 import Pokedex from './components/pokedex/Pokedex'
 
 export const BASE_URL = "http://localhost:4000/api";
