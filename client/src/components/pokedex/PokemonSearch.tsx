@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { Input } from "@/components/ui/input"
+import { Button } from "../ui/button";
+
 
 const PokemonSearch = () => {
     const [pokemonSearchQuery, setPokemonSearchQuery] = useState("");
@@ -19,7 +22,8 @@ const PokemonSearch = () => {
 
     return (
         <form onSubmit={searchPokemon}>
-
+            <Input />
+            <Button type="submit" />
         </form>
     )
 }
