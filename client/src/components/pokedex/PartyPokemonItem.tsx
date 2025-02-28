@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { PartyPokemon } from "./PartyPokemonList";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
@@ -12,6 +12,10 @@ import { BASE_URL } from "@/App";
 const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [name, setName] = useState("");
+    const [level, setLevel] = useState(0);
+    const [nature, setNature] = useState("");
+
+    const queryClient = useQueryClient();
 
     const { mutate: updatePartyPokemon, isPending: isUpdating } = useMutation({
         mutationKey: ["updatePartyPokemon"],
@@ -23,7 +27,7 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
-                    },
+                    }, // without the content type header it would lead to an "unprocessable request" aka the server couldnt decode the body.
                     body: JSON.stringify({ nickname: name })
                 });
 
@@ -36,7 +40,10 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["partyPokemons"] });
+        },
     });
 
     const handleSubmit = (event: any) => {
@@ -77,6 +84,18 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
                                     Name
                                 </Label>
                                 <Input id="nicknameInput" type="text" value={name} onChange={handleNameChange} className="col-span-3" />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="level" className="text-right">
+                                    Level
+                                </Label>
+                                <Input id="level" value="" className="col-span-3" />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="nature" className="text-right">
+                                    Nature
+                                </Label>
+                                <Input id="nature" value="" className="col-span-3" />
                             </div>
                         </div>
                         <DialogFooter>

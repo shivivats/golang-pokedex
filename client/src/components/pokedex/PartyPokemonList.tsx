@@ -17,7 +17,7 @@ export type PartyPokemon = {
 
 const PartyPokemonList = () => {
     const { data: partyPokemons, isLoading } = useQuery<PartyPokemon[]>({
-        queryKey: ["partyPokemons"], // fetch the query that has the query key 'partyPokemons'
+        queryKey: ["partyPokemons"], // identify this query with the query key 'partyPokemons'
         queryFn: async () => {
             try {
                 const res = await fetch(BASE_URL + "/pokemons");
