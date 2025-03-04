@@ -21,9 +21,9 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
         mutationKey: ["updatePartyPokemon"],
         mutationFn: async () => {
             try {
-                console.log(BASE_URL + `/pokemons/${partyPokemon._id}`);
+                console.log(BASE_URL + `/party-pokemons/${partyPokemon._id}`);
 
-                const res = await fetch(BASE_URL + `/pokemons/${partyPokemon._id}`, {
+                const res = await fetch(BASE_URL + `/party-pokemons/${partyPokemon._id}`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",

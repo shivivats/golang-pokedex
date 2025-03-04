@@ -20,7 +20,7 @@ const PartyPokemonList = () => {
         queryKey: ["partyPokemons"], // identify this query with the query key 'partyPokemons'
         queryFn: async () => {
             try {
-                const res = await fetch(BASE_URL + "/pokemons");
+                const res = await fetch(BASE_URL + "/party-pokemons");
                 const data = await res.json();
                 if (!res.ok) {
                     throw new Error(data.error || "Something went wrong!");
@@ -30,7 +30,7 @@ const PartyPokemonList = () => {
                 console.log(error);
             }
         }
-    })
+    });
 
     return (
         <div>
