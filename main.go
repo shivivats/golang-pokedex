@@ -58,10 +58,13 @@ func main() {
 		AllowHeaders: "Origin,Content-Type,Accept",
 	}))
 
-	app.Get("/api/pokemons", getPartyPokemons)
-	app.Post("/api/pokemons", addPokemonToParty)
-	app.Patch("/api/pokemons/:id", updatePartyPokemon)
-	app.Delete("/api/pokemons/:id", deletePartyPokemon)
+	app.Get("/api/party-pokemons", getPartyPokemons)
+	app.Post("/api/party-pokemons/:species_id", addPokemonToParty)
+	app.Patch("/api/party-pokemons/:id", updatePartyPokemon)
+	app.Delete("/api/party-pokemons/:id", deletePartyPokemon)
+
+	app.Get("/api/pokemons/names/", getFilteredPokemonNames)
+	app.Get("/api/pokemons/species/:species_id", getPokemonSpeciesPreviewDetails)
 
 	port := os.Getenv("PORT")
 	if port == "" {

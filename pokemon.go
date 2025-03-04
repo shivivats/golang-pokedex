@@ -1,124 +1,96 @@
 package main
 
 import (
-	"context"
+	"strconv"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/mtslzr/pokeapi-go"
 )
 
-type PartyPokemon struct {
-	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	SpeciesID int                `json:"species_id"`
-	Nickname  string             `json:"nickname"`
-	Level     int                `json:"level"`
-	Nature    string             `json:"nature"`
-	Sprite    string             `json:"sprite"`
+type PokemonPreview struct {
+	SpeciesID      int    `json:"species_id"`
+	Name           string `json:"nickname"`
+	Sprite         string `json:"sprite"`
+	Classification string `json:"classification"`
+	Type1          string `json:"type1"`
+	Type2          string `json:"type2"`
+	Description    string `json:"description"`
 }
 
-func getPartyPokemons(c *fiber.Ctx) error {
-	var partyPokemons []PartyPokemon
+// fetch a filtered list of pokemon names
+func getFilteredPokemonNames(c *fiber.Ctx) error {
+	searchTerm := c.Query("name")
+	var filteredNames []string
 
-	// bson.M passes filters to the query
-	// In this case we have no filters since we want to obtain all pokemon in the collection
-	cursor, err := collection.Find(context.Background(), bson.M{})
-
-	if err != nil {
-		return err
-	}
-
-	// defer aka postpone the closing of the connection until the end of this function
-	defer cursor.Close(context.Background())
-
-	// cursor is a pointer to the result set
-	for cursor.Next(context.Background()) {
-		var partyPokemon PartyPokemon
-		if err := cursor.Decode(&partyPokemon); err != nil {
-			return err
+	for _, name := range pokemonNames {
+		if len(searchTerm) == 0 || strings.Contains(strings.ToLower(name), strings.ToLower(searchTerm)) {
+			filteredNames = append(filteredNames, name)
 		}
-
-		// keep adding the pokemons to the array to return
-		partyPokemons = append(partyPokemons, partyPokemon)
 	}
 
-	return c.JSON(partyPokemons)
+	return c.Status(fiber.StatusOK).JSON(filteredNames)
 }
 
-func addPokemonToParty(c *fiber.Ctx) error {
-	// make a new party pokemon object to parse the request body data into
-	newPartyPokemon := new(PartyPokemon)
-	if err := c.BodyParser(newPartyPokemon); err != nil {
-		return err
+// fetch details of a pokemon SPECIES!!
+func getPokemonSpeciesPreviewDetails(c *fiber.Ctx) error {
+	// get species_id from request parameters (this is different from body!)
+	species_id := c.Params("species_id")
+
+	pokemonSpeciesDetails, err := pokeapi.PokemonSpecies(species_id)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Pokemon species number not found!"})
 	}
 
-	if newPartyPokemon.SpeciesID == 0 {
-		return c.Status(400).JSON(fiber.Map{"error": "Pokemon Species is invalid!"})
-	}
-
-	insertResult, err := collection.InsertOne(context.Background(), newPartyPokemon)
-
+	frontDefaultSprite, err := getFrontDefaultSpriteOfPokemonSpecies(species_id)
 	if err != nil {
 		return err
 	}
 
-	// update the partyPokemon's ID with the newly inserted resource's ID from MongoDB
-	// this ensures a unique ID amongst all of the data
-	newPartyPokemon.ID = insertResult.InsertedID.(primitive.ObjectID)
-
-	return c.Status(201).JSON(newPartyPokemon)
-}
-
-func updatePartyPokemon(c *fiber.Ctx) error {
-	// parse the request body into the updatedPartyPokemon object
-	updatedPartyPokemon := new(PartyPokemon)
-	if err := c.BodyParser(updatedPartyPokemon); err != nil {
-		return err
-	}
-
-	if updatedPartyPokemon.Nickname == "" {
-		return c.Status(400).JSON(fiber.Map{"error": "Pokemon nickname cant be empty!"})
-	}
-
-	// get Id from request parameters (this is different from body!)
-	id := c.Params("id")
-
-	objectID, err := primitive.ObjectIDFromHex(id)
-
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"error": "Invalid Pokemon ID!"})
-	}
-
-	filter := bson.M{"_id": objectID}
-
-	// use the update interface to set the nickname of the existing pokemon based on ID to the nickname specified in the request body
-	update := bson.M{"$set": bson.M{"nickname": updatedPartyPokemon.Nickname}}
-
-	_, err = collection.UpdateOne(context.Background(), filter, update)
-
+	species_id_int, err := strconv.Atoi(species_id)
 	if err != nil {
 		return err
 	}
 
-	return c.Status(200).JSON(fiber.Map{"success": true, "nickname": updatedPartyPokemon.Nickname})
-}
-
-func deletePartyPokemon(c *fiber.Ctx) error {
-	id := c.Params("id")
-
-	objectID, err := primitive.ObjectIDFromHex(id)
-
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"error": "Invalid Pokemon ID!"})
-	}
-
-	filter := bson.M{"_id": objectID}
-
-	_, err = collection.DeleteOne(context.Background(), filter)
-
+	genus, err := getGenusFromPokemonSpecies(species_id)
 	if err != nil {
 		return err
 	}
 
-	return c.Status(200).JSON(fiber.Map{"success": true})
+	pokemon, err := GetDefaultPokemonOfSpecies(species_id)
+	if err != nil {
+		return err
+	}
+
+	var type2 string = ""
+
+	if len(pokemon.Types) > 1 {
+		type2 = pokemon.Types[1].Type.Name
+	} else {
+		type2 = ""
+	}
+
+	description := ""
+
+	for _, flavorTextEntry := range pokemonSpeciesDetails.FlavorTextEntries {
+		if flavorTextEntry.Language.Name == "en" {
+			description = flavorTextEntry.FlavorText
+			break
+		}
+	}
+
+	description = strings.Replace(description, "\n", " ", -1)
+	description = strings.Replace(description, "\f", " ", -1)
+
+	var pokemonPreview = PokemonPreview{
+		SpeciesID:      species_id_int,
+		Name:           pokemonSpeciesDetails.Name,
+		Sprite:         frontDefaultSprite,
+		Classification: genus,
+		Type1:          pokemon.Types[0].Type.Name,
+		Type2:          type2,
+		Description:    description,
+	}
+
+	return c.Status(fiber.StatusOK).JSON(pokemonPreview)
 }
