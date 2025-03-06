@@ -33,7 +33,7 @@ const PartyPokemonList = () => {
         <div>
             {isLoading && (
                 <div className="flex justify-center mb-4">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                    <div className="animate-spin rounded-full size-16 border-b-4 border-blue-500"></div>
                 </div>
             )}
             {!isLoading && partyPokemons?.length === 0 && (

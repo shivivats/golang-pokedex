@@ -58,7 +58,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
                                 pokemonSearchResults.map((pokemon) => (
                                     <div
                                         key={pokemon.name}
-                                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                                        className="p-2 cursor-pointer"
                                         onClick={() => {
                                             onPokemonSelected(pokemon.species_id.toString()) // set the parameter to pass to the PokemonPreview component
                                             console.log("Selected Pokemon with " + pokemon.species_id.toString())

@@ -9,12 +9,12 @@ const Pokedex = () => {
     const [selectedPokemonID, setSelectedPokemonID] = useState("");
 
     return (
-        <div className="bg-red-200 p-6">
-            <div className="flex flex-col md:flex-row gap-4 mx-auto max-w-5xl">
-                < div className="w-full md:w-1/2" >
+        <div className="p-6">
+            <div className="flex flex-row gap-4 mx-auto max-w-5xl">
+                < div className="w-1/2" >
                     <PokemonPreview pokemonSpeciesID={selectedPokemonID} />
                 </div>
-                <div className="w-full md:w-1/2 ">
+                <div className="w-1/2">
                     <PokemonSearch onPokemonSelected={setSelectedPokemonID} />
                     <PartyPokemonList />
                 </div>

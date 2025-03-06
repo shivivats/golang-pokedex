@@ -11,7 +11,6 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      <p>Hello World!</p>
     </QueryClientProvider>
   </StrictMode>,
 )
