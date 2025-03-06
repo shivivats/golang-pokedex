@@ -1,7 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
 import { Input } from "@/components/ui/input"
-import { Button } from "../ui/button";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BASE_URL } from "@/App";
 import { Card } from "../ui/card";

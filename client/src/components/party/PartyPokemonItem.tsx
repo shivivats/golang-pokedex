@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { PartyPokemon } from "./PartyPokemonList";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { CiEdit } from "react-icons/ci";
 import { BASE_URL } from "@/App";
+import { PartyPokemon } from "./PartyPokemonList";
 
 
 const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {

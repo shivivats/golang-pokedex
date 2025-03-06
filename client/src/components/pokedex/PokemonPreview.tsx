@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { Input } from "@/components/ui/input"
-import { Button } from "../ui/button";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import PartyPokemonItem from "./PartyPokemonItem"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { BASE_URL } from "@/App";
-import { Progress } from "../ui/progress";
 
 // make a new pokemon struct for the pokemon preview details
 

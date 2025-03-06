@@ -1,7 +1,4 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import PartyPokemonItem from "./PartyPokemonItem"
 import { useQuery } from "@tanstack/react-query"
 import { BASE_URL } from "@/App";
@@ -42,7 +39,7 @@ const PartyPokemonList = () => {
             {!isLoading && partyPokemons?.length === 0 && (
                 <p >Add a pokemon to your party for it to show up here.</p>
             )}
-            <h1 className="text-3xl font-bold text-center mb-8">Header Text</h1>
+            <h1 className="text-3xl font-bold text-center mb-8 mt-8">XYZ's Party</h1>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">   {/* Right Column: Image Grid */}
                 {partyPokemons?.map((partyPokemon) => (
                     <PartyPokemonItem key={partyPokemon._id} partyPokemon={partyPokemon} />
