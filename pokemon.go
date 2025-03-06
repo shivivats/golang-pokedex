@@ -18,14 +18,19 @@ type PokemonPreview struct {
 	Description    string `json:"description"`
 }
 
+type PokemonSearchResult struct {
+	SpeciesID int    `json:"species_id"`
+	Name      string `json:"name"`
+}
+
 // fetch a filtered list of pokemon names
 func getFilteredPokemonNames(c *fiber.Ctx) error {
 	searchTerm := c.Query("name")
-	var filteredNames []string
+	var filteredNames []PokemonSearchResult
 
-	for _, name := range pokemonNames {
+	for i, name := range pokemonNames {
 		if len(searchTerm) == 0 || strings.Contains(strings.ToLower(name), strings.ToLower(searchTerm)) {
-			filteredNames = append(filteredNames, name)
+			filteredNames = append(filteredNames, PokemonSearchResult{SpeciesID: i + 1, Name: name})
 		}
 	}
 
