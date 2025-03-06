@@ -20,7 +20,7 @@ type PartyPokemon struct {
 	Sprite    string             `json:"sprite"`
 }
 
-func getPartyPokemons(c *fiber.Ctx) error {
+func getPartyPokemonsAsArray() ([]PartyPokemon, error) {
 	var partyPokemons []PartyPokemon
 
 	// bson.M passes filters to the query
@@ -28,7 +28,7 @@ func getPartyPokemons(c *fiber.Ctx) error {
 	cursor, err := collection.Find(context.Background(), bson.M{})
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// defer aka postpone the closing of the connection until the end of this function
@@ -38,11 +38,20 @@ func getPartyPokemons(c *fiber.Ctx) error {
 	for cursor.Next(context.Background()) {
 		var partyPokemon PartyPokemon
 		if err := cursor.Decode(&partyPokemon); err != nil {
-			return err
+			return nil, err
 		}
 
 		// keep adding the pokemons to the array to return
 		partyPokemons = append(partyPokemons, partyPokemon)
+	}
+
+	return partyPokemons, nil
+}
+
+func getPartyPokemons(c *fiber.Ctx) error {
+	partyPokemons, err := getPartyPokemonsAsArray()
+	if err != nil {
+		return err
 	}
 
 	return c.JSON(partyPokemons)
@@ -58,6 +67,15 @@ func addPokemonToParty(c *fiber.Ctx) error {
 	// if newPartyPokemon.SpeciesID == 0 {
 	// 	return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Pokemon Species is invalid!"})
 	// }
+
+	// if there are already 6 pokemon in the party, then return no
+	partyPokemons, err := getPartyPokemonsAsArray()
+	if err != nil {
+		return err
+	}
+	if len(partyPokemons) >= 6 {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"Status": "User already has 6 pokemons in their party!"})
+	}
 
 	// get species_id from request parameters (this is different from body!)
 	species_id := c.Params("species_id")
@@ -96,7 +114,7 @@ func addPokemonToParty(c *fiber.Ctx) error {
 	// this ensures a unique ID amongst all of the data
 	newPartyPokemon.ID = insertResult.InsertedID.(primitive.ObjectID)
 
-	return c.Status(fiber.StatusCreated).JSON(newPartyPokemon)
+	return c.Status(fiber.StatusOK).JSON(newPartyPokemon)
 }
 
 func updatePartyPokemon(c *fiber.Ctx) error {

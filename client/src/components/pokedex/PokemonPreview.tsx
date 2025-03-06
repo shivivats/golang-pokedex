@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { BASE_URL } from "@/App";
+import PartyPokemonAddButton from "../party/PartyPokemonAddButton";
 
 // make a new pokemon struct for the pokemon preview details
 
@@ -53,62 +54,20 @@ const PokemonPreview = ({ pokemonSpeciesID }: { pokemonSpeciesID: string }) => {
 
     return (
         <div>
-            {/* Pagination */}
-            < div className="flex justify-center mt-4" >
-                {
-                    [1, 2, 3].map((circle) => (
-                        <div
-                            key={circle}
-                            className={`h-4 w-4 rounded-full mx-1 ${currentPage === circle ? 'bg-blue-500' : 'bg-gray-300'}`}
-                        ></div>
-                    ))
-                }
-            </div >
-
-            {/* Pagination Buttons */}
-            < div className="flex justify-between mt-4" >
-                <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                    className={`px-4 py-2 bg-blue-500 text-white rounded-lg ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                    Prev
-                </button>
-                <button
-                    onClick={handleNextPage}
-                    disabled={currentPage === Math.ceil(3)}
-                    className={`px-4 py-2 bg-blue-500 text-white rounded-lg ${currentPage === 3 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                    Next
-                </button>
-            </div >
-
-            <div className="flex justify-between mb-4"> {/* Left Column: Image with Tabs and Buttons */}
-                <button
-                    onClick={() => console.log("Button 2 clicked")}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                >
-                    Button 1
-                </button>
-                <button
-                    onClick={() => console.log("Button 2 clicked")}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                >
-                    Button 2
-                </button>
-            </div >
 
             {/* Spinner */}
             {isLoading && (
                 <div className="flex justify-center mb-4">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                    <div className="animate-spin rounded-full size-16 border-b-4 border-blue-500"></div>
                 </div>
             )}
 
             {/* Main Preview Image */}
             <img src={previewPokemon?.sprite} alt="Main Image" className="w-full h-auto rounded-lg mb-4" />
 
-
+            <div className="flex justify-between mb-4">
+                <PartyPokemonAddButton pokemonSpeciesID={pokemonSpeciesID} />
+            </div >
 
             {/* Tabs with Details */}
             <Tabs defaultValue="tab1" className="w-full">
@@ -116,10 +75,10 @@ const PokemonPreview = ({ pokemonSpeciesID }: { pokemonSpeciesID: string }) => {
                     <TabsTrigger value="tab1">Tab 1</TabsTrigger>
                     <TabsTrigger value="tab2">Tab 2</TabsTrigger>
                 </TabsList>
-                <TabsContent value="tab1" className="p-4 bg-white rounded-lg shadow-md mt-4">
+                <TabsContent value="tab1" className="p-4 rounded-lg shadow-md mt-4">
                     Content for Tab 1
                 </TabsContent>
-                <TabsContent value="tab2" className="p-4 bg-white rounded-lg shadow-md mt-4">
+                <TabsContent value="tab2" className="p-4 rounded-lg shadow-md mt-4">
                     Content for Tab 2
                 </TabsContent>
             </Tabs>
