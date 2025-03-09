@@ -65,7 +65,7 @@ const PartyPokemonAddButton = ({ pokemonSpeciesID }: { pokemonSpeciesID: string 
         <div>
             <Button
                 onClick={handleAddButtonPress}
-                className="px-4 py-2 text-white rounded-lg"
+                className="px-4 py-2 text-white rounded-lg bg-slate-700"
             >
                 Add Pokemon to Party
             </Button>

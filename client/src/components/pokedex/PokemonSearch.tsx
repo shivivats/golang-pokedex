@@ -37,7 +37,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
     });
 
     return (
-        <div>
+        <div className="relative">
             <Input
                 type="text"
                 placeholder="Search for Pokemons..."
@@ -50,7 +50,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
             />
             {
                 pokemonSearchQuery && (
-                    <Card>
+                    <Card className="absolute w-full z-50 bg-red-300">
                         {
                             isLoading ? (
                                 <div className="p-2 text-gray-500">Loading...</div>
@@ -58,7 +58,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
                                 pokemonSearchResults.map((pokemon) => (
                                     <div
                                         key={pokemon.name}
-                                        className="p-2 cursor-pointer"
+                                        className="cursor-pointer border-1"
                                         onClick={() => {
                                             onPokemonSelected(pokemon.species_id.toString()) // set the parameter to pass to the PokemonPreview component
                                             console.log("Selected Pokemon with " + pokemon.species_id.toString())

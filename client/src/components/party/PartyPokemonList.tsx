@@ -10,6 +10,8 @@ export type PartyPokemon = {
     level: number;
     nature: string;
     sprite: string;
+    type1: string;
+    type2: string;
 }
 
 const PartyPokemonList = () => {

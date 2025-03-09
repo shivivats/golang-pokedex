@@ -5,6 +5,83 @@
 @custom-variant dark (&:is(.dark *));
 
 
+body {
+  background-color: var(--color-red-200);
+}
+
+.normal {
+  background-color: var(--color-zinc-400);
+}
+
+.fire {
+  background-color: var(--color-orange-600);
+}
+
+.water {
+  background-color: var(--color-blue-400);
+}
+
+.electric {
+  background-color: var(--color-yellow-300);
+}
+
+.grass {
+  background-color: var(--color-green-700);
+}
+
+.ice {
+  background-color: var(--color-cyan-300);
+}
+
+.fighting {
+  background-color: var(--color-amber-700);
+}
+
+.poison {
+  background-color: var(--color-fuchsia-700);
+}
+
+.ground {
+  background-color: var(--color-amber-400);
+}
+
+.flying {
+  background-color: var(--color-sky-400);
+}
+
+.psychic {
+  background-color: var(--color-rose-400);
+}
+
+.bug {
+  background-color: var(--color-lime-600);
+}
+
+.rock {
+  background-color: var(--color-yellow-600);
+}
+
+.ghost {
+  background-color: var(--color-violet-800);
+}
+
+.dragon {
+  background-color: var(--color-indigo-500);
+}
+
+.dark {
+  background-color: var(--color-yellow-900);
+}
+
+.steel {
+  background-color: var(--color-slate-400);
+}
+
+.fairy {
+  background-color: var(--color-pink-300);
+}
+
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(20 14.3% 4.1%);
@@ -99,24 +176,14 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+}
 
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
 
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-
-    to {
-      height: 0;
-    }
+  body {
+    @apply bg-background text-foreground;
   }
 }

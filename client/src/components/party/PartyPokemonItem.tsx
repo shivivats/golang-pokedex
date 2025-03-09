@@ -59,7 +59,7 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
     };
 
     return (
-        <div key={partyPokemon.species_id} className="rounded-lg shadow-md p-4">
+        <div key={partyPokemon.species_id} className="rounded-lg shadow-md p-4 border-1">
             <img src={partyPokemon.sprite} alt={partyPokemon.nickname} className="w-full h-auto mb-2" />
             <h3 className="font-bold text-lg">{partyPokemon.nickname}</h3>
             <p># {partyPokemon.species_id}</p>
