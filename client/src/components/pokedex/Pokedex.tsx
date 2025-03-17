@@ -39,7 +39,7 @@ const Pokedex = () => {
     const [selectedPokemonID, setSelectedPokemonID] = useState("");
 
     return (
-        <div className="flex h-5/6 w-3/4 rounded-lg bg-red-200 shadow-xl">
+        <div className="flex h-5/6 w-3/4 rounded-lg bg-pokedex-red shadow-xl text-pokedex-gray">
             {/* Left side */}
             <div className="flex w-1/2 flex-col p-4 border-2">
                 {/* Top Section */}
@@ -55,13 +55,13 @@ const Pokedex = () => {
                             <PaginationPrevious href="#" />
                         </PaginationItem> */}
                                 <PaginationItem>
-                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-red-500">1</PaginationLink>
+                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-pokedex-blue">1</PaginationLink>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-red-500">2</PaginationLink>
+                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-pokedex-blue">2</PaginationLink>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-red-500">3</PaginationLink>
+                                    <PaginationLink href="#" className="h-3 w-3 rounded-full bg-pokedex-blue">3</PaginationLink>
                                 </PaginationItem>
                                 {/* <PaginationItem>
                             <PaginationEllipsis />
@@ -83,10 +83,10 @@ const Pokedex = () => {
 
                 <div className="flex flex-col">
                     <PartyPokemonList />
-                    <div className="flex justify-around">
-                        <button className="rounded bg-green-400 p-2">Button</button>
-                        <button className="rounded bg-green-400 p-2">Button</button>
-                        <button className="rounded bg-green-400 p-2">Button</button>
+                    <div className="flex justify-around mt-8">
+                        <button className="rounded bg-pokedex-green p-2">Button</button>
+                        <button className="rounded bg-pokedex-green p-2">Button</button>
+                        <button className="rounded bg-pokedex-green p-2">Button</button>
                     </div>
                 </div>
             </div>

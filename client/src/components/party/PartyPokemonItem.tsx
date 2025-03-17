@@ -59,12 +59,12 @@ const PartyPokemonItem = ({ partyPokemon }: { partyPokemon: PartyPokemon }) => {
     };
 
     return (
-        <div key={partyPokemon.species_id} className="rounded-lg shadow-md p-4 border-1">
+        <div key={partyPokemon.species_id} className="rounded-lg shadow-md p-4 border-1 bg-pokedex-blue">
             <img src={partyPokemon.sprite} alt={partyPokemon.nickname} className="w-full h-auto mb-2" />
             <h3 className="font-bold text-lg">{partyPokemon.nickname}</h3>
             <p># {partyPokemon.species_id}</p>
             <p>Lv. {partyPokemon.level}</p>
-            <p>{partyPokemon.nature} Nature</p>
+            <p>{partyPokemon.nature}</p>
 
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>

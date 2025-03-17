@@ -42,6 +42,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
                 type="text"
                 placeholder="Search for Pokemons..."
                 value={pokemonSearchQuery}
+                className="h-20"
                 onChange={(e) => {
                     setPokemonSearchQuery(e.target.value);
                     console.log("pokemonSearchQuery: " + pokemonSearchQuery)
@@ -50,7 +51,7 @@ const PokemonSearch = ({ onPokemonSelected }: PokemonSearchInputProps) => {
             />
             {
                 pokemonSearchQuery && (
-                    <Card className="absolute w-full z-50 bg-red-300">
+                    <Card className="absolute w-full z-50 bg-pokedex-red">
                         {
                             isLoading ? (
                                 <div className="p-2 text-gray-500">Loading...</div>

@@ -81,6 +81,18 @@ body {
   background-color: var(--color-pink-300);
 }
 
+@theme {
+  --color-pokedex-red: #dc0a2d;
+  --color-pokedex-dark-red: #cc0000;
+  --color-pokedex-blue: #26a9f8;
+  --color-pokedex-black: #232323;
+  --color-pokedex-green: #51ae5f;
+  --color-pokedex-gray: #dedede;
+  --color-pokedex-yellow: #fcde1e;
+  --color-pokedex-ochre: #b3a125;
+}
+
+
 
 :root {
   --background: hsl(0 0% 100%);
