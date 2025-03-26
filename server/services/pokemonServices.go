@@ -35,6 +35,7 @@ func GetFrontDefaultSprite(species_id string) (string, error) {
 
 func GetSpeciesDefaultPokemon(species_id string) (structs.Pokemon, error) {
 	pokemonSpecies, err := pokeapi.PokemonSpecies(species_id)
+
 	var pokemon = structs.Pokemon{}
 
 	if err != nil {

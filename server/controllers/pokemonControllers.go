@@ -103,3 +103,40 @@ func GetPokemonSpeciesPreviewDetails(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(pokemonPreview)
 
 }
+
+func GetPokemonSprite(c *fiber.Ctx) error {
+
+	// get species_id from request parameters
+	species_id := c.Params("species_id")
+
+	// get generation from the request parameters
+	sprite_gen := c.Params("sprite_gen")
+
+	// load the pokemon's basic variant and get its sprite
+	pokemon := services.GetSpeciesDefaultPokemon(species_id)
+
+	var new_sprite string
+
+	switch sprite_gen {
+	case "i":
+		//new_sprite = pokemon.Species.
+
+	case "ii":
+
+	case "iii":
+
+	case "iv":
+
+	case "v":
+
+	case "vi":
+
+	case "vii":
+
+	case "viii":
+
+	case "ix":
+
+	}
+
+}
